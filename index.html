@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>居月ナオ 美術館</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="居月ナオの3つの展示室：お地球見の丘より。／NEBULA CLAWS QUARTET／雨月座">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&family=Big+Shoulders+Display:wght@600;800&family=Dela+Gothic+One&family=Kaisei+Decol:wght@700&display=swap">
+<style>
+/* Layout: 縦に歩く美術館。エントランス → 廊下 → 展示室Ⅰ（夕暮れの丘）→ 廊下 → 展示室Ⅱ（夜のクラブ）→ 扉 → 展示室Ⅲ（見世物小屋）→ 出口。
+   部屋ごとに照明（配色）が変わる、意図的な単一テーマの設計。 */
+:root {
+  color-scheme: light;
+  /* エントランス・出口：ギャラリーの白い壁 */
+  --wall: #f2f3f1;
+  --wall-ink: #23262b;
+  --wall-muted: #6b7078;
+  --wall-line: #d7dad6;
+  /* 展示室Ⅰ：夕暮れの丘 */
+  --hill-bg: #e4eaec;
+  --hill-ink: #283742;
+  --hill-muted: #5e6f7a;
+  --hill-accent: #6f6fa6;
+  --hill-line: #c6d0d4;
+  /* 展示室Ⅱ：夜のジャズクラブ */
+  --jazz-bg: #10162a;
+  --jazz-ink: #ece5d3;
+  --jazz-muted: #9aa0b2;
+  --jazz-accent: #c9a35b;
+  --jazz-line: #2a3350;
+  /* 展示室Ⅲ：雨月座「毒レモン」（緑がかったレモン色の地に、ピンクと電気の青） */
+  --ugetsu-bg: #e2f23b;
+  --ugetsu-deep: #f6ff8a;
+  --ugetsu-ink: #0e0e12;
+  --ugetsu-muted: #4f5520;
+  --ugetsu-accent: #ff2a9d;
+  --ugetsu-line: #c3d22a;
+  --ugetsu-hi: #3324ff;
+  --ugetsu-title: #0e0e12;
+  --ugetsu-sh1: #ff2a9d;
+  --ugetsu-sh2: #3324ff;
+
+  --font-mincho: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --font-jazz: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --font-ugetsu: "Dela Gothic One", "Hiragino Kaku Gothic StdN", sans-serif;
+  --font-ugetsu-title: "Kaisei Decol", "Hiragino Mincho ProN", serif;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 6vw, 3.5rem);
+  --step-4: clamp(2.75rem, 9vw, 5.5rem);
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--wall);
+  color: var(--wall-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+  word-break: auto-phrase;
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+h1, h2, h3 { text-wrap: balance; font-weight: 400; margin: 0; }
+p { margin: 0; }
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter-r);
+}
+
+/* 試作の注記 */
+.proto-note {
+  font-size: var(--step--1);
+  color: var(--wall-muted);
+  border-bottom: 1px solid var(--wall-line);
+}
+.proto-note .inner { padding-block: 10px; }
+
+/* ── エントランス ── */
+.entrance .inner {
+  padding-block: clamp(56px, 12vw, 120px) clamp(40px, 8vw, 80px);
+  display: grid;
+  gap: clamp(40px, 6vw, 64px);
+}
+.entrance-head { display: grid; gap: 20px; }
+.entrance .eyebrow {
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  color: var(--wall-muted);
+}
+.entrance h1 {
+  font-family: var(--font-mincho);
+  font-size: var(--step-4);
+  line-height: 1.15;
+  letter-spacing: 0.12em;
+}
+.entrance h1 .roman {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: 0.4em;
+  color: var(--wall-muted);
+  margin-top: 14px;
+}
+.entrance .profession {
+  font-family: var(--font-mincho);
+  font-size: var(--step-0);
+  letter-spacing: 0.3em;
+  color: var(--wall-muted);
+}
+.entrance .greeting {
+  font-family: var(--font-mincho);
+  font-size: var(--step-1);
+  line-height: 2;
+}
+
+/* 館内案内図 */
+.news { display: grid; gap: 14px; }
+.news-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.news-list li { display: grid; grid-template-columns: 7em minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid var(--wall-line); }
+.news-list li:last-child { border-bottom: 1px solid var(--wall-line); }
+.news-list time { font-size: var(--step--1); color: var(--wall-muted); font-variant-numeric: tabular-nums; letter-spacing: 0.08em; padding-top: 2px; }
+.floorplan { display: grid; gap: 14px; }
+.news h2, .floorplan h2 {
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  color: var(--wall-muted);
+}
+.plan {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--wall-ink);
+}
+.plan a {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 18px 16px 22px;
+  text-decoration: none;
+  border-right: 1px solid var(--wall-ink);
+  min-height: 150px;
+  transition: background-color .4s, color .4s;
+}
+.plan a:last-child { border-right: 0; }
+.plan .no { font-size: var(--step--1); letter-spacing: 0.2em; color: var(--wall-muted); }
+.plan .nm { font-family: var(--font-mincho); font-size: var(--step-1); line-height: 1.4; }
+.plan .ds { font-size: var(--step--1); color: var(--wall-muted); line-height: 1.6; }
+.plan a[href="#room-hill"]:hover { background: var(--hill-bg); }
+.plan a[href="#room-jazz"]:hover { background: var(--jazz-bg); color: var(--jazz-ink); }
+.plan a[href="#room-ugetsu"]:hover { background: var(--ugetsu-bg); color: var(--ugetsu-ink); }
+.plan a:hover .no, .plan a:hover .ds { color: inherit; opacity: .75; }
+@media (max-width: 640px) {
+  .plan { grid-template-columns: 1fr; }
+  .plan a { border-right: 0; border-bottom: 1px solid var(--wall-ink); min-height: 0; }
+  .plan a:last-child { border-bottom: 0; }
+}
+
+/* ── 廊下（照明が移り変わる区間） ── */
+.corridor {
+  height: clamp(160px, 28vh, 300px);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, var(--from), var(--to));
+}
+.corridor span {
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  writing-mode: vertical-rl;
+  color: var(--c);
+  background: var(--chip);
+  border: 1px solid var(--c);
+  padding: 16px 8px;
+}
+
+/* ── 展示室 共通 ── */
+.room .inner {
+  padding-block: clamp(56px, 10vw, 104px);
+  display: grid;
+  gap: clamp(36px, 6vw, 56px);
+}
+.room-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px 48px;
+  align-items: end;
+}
+@media (max-width: 760px) { .room-head { grid-template-columns: 1fr; } }
+.room-no { font-size: var(--step--1); letter-spacing: 0.3em; }
+.room-title { font-size: var(--step-3); line-height: 1.2; margin-top: 10px; }
+.room-intro { display: grid; gap: 16px; }
+.room-intro .tags { font-size: var(--step--1); }
+.visit {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  padding: 10px 18px;
+  border: 1px solid currentColor;
+  transition: background-color .3s, color .3s;
+}
+
+/* 作品グリッド */
+.works {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 44px) clamp(20px, 3vw, 32px);
+}
+.work.featured { grid-column: span 2; grid-row: span 2; }
+@media (max-width: 900px) {
+  .works { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .work.featured { grid-column: span 2; grid-row: auto; }
+}
+@media (max-width: 560px) {
+  .works { grid-template-columns: 1fr; }
+  .work.featured { grid-column: auto; }
+}
+.work { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.work a.frame {
+  display: block;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  overflow: hidden;
+  text-decoration: none;
+}
+.thumb {
+  position: absolute; inset: 0;
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  transition: transform .8s ease, filter .5s;
+}
+.work a.frame:hover .thumb { transform: scale(1.03); }
+.play {
+  position: absolute; right: 12px; bottom: 12px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 13px;
+  opacity: .9;
+}
+/* 作品キャプション（美術館の解説パネル） */
+.label { display: grid; gap: 2px; font-size: var(--step--1); line-height: 1.7; }
+.label .t { font-size: var(--step-0); line-height: 1.5; }
+.work.featured .label .t { font-size: var(--step-1); }
+.label .meta { display: flex; flex-wrap: wrap; gap: 0 14px; }
+
+/* ── 展示室Ⅰ 夕暮れの丘 ── */
+#room-hill { background: var(--hill-bg); color: var(--hill-ink); }
+#room-hill .room-no, #room-hill .label .meta, #room-hill .tags { color: var(--hill-muted); }
+#room-hill .room-title { font-family: var(--font-mincho); letter-spacing: 0.08em; }
+#room-hill .room-intro p:not(.tags) { font-family: var(--font-mincho); }
+#room-hill .label .t { font-family: var(--font-mincho); }
+#room-hill .visit { color: var(--hill-accent); }
+#room-hill .visit:hover { background: var(--hill-accent); color: var(--hill-bg); }
+#room-hill .play { background: rgba(255,255,255,.75); color: var(--hill-ink); }
+.thumb.hill {
+  background:
+    radial-gradient(ellipse 90% 55% at 22% 112%, #5f7d6a 0 50%, transparent 51%),
+    radial-gradient(ellipse 80% 45% at 85% 118%, #7d987f 0 50%, transparent 51%),
+    radial-gradient(circle at var(--sx) 34%, #fff1d2 0 5%, rgba(255,232,190,.5) 6%, transparent 22%),
+    linear-gradient(180deg, hsl(var(--h) 38% 74%) 0%, hsl(calc(var(--h) + 150) 55% 84%) 100%);
+}
+
+/* アーカイブ室（展示室Ⅰの奥の小部屋） */
+.archive {
+  border-top: 1px solid var(--hill-line);
+  padding-top: 28px;
+  display: grid;
+  gap: 18px;
+}
+.archive summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px;
+}
+.archive summary::-webkit-details-marker { display: none; }
+.archive summary h3 { font-family: var(--font-mincho); font-size: var(--step-2); }
+.archive summary .sub { font-size: var(--step--1); color: var(--hill-muted); }
+.archive summary .tog { font-size: var(--step--1); color: var(--hill-accent); }
+.archive[open] summary .tog::after { content: "閉じる"; }
+.archive:not([open]) summary .tog::after { content: "ひらく"; }
+.archive p.lead { font-family: var(--font-mincho); color: var(--hill-muted); margin-top: 14px; }
+.archive-works { margin-top: 22px; }
+.archive-works .play { width: 32px; height: 32px; font-size: 11px; }
+.archive-works .thumb { filter: sepia(.25) saturate(.85); }
+.archive-works .work a.frame:hover .thumb { filter: none; }
+@media (max-width: 560px) { .archive-works { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 14px; } }
+
+/* ── 展示室Ⅱ 夜のジャズクラブ ── */
+#room-jazz { background: var(--jazz-bg); color: var(--jazz-ink); }
+#room-jazz .room-no, #room-jazz .label .meta, #room-jazz .tags { color: var(--jazz-muted); }
+#room-jazz .room-title {
+  font-family: var(--font-jazz);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  line-height: .95;
+}
+#room-jazz .room-title em { font-style: normal; color: var(--jazz-accent); display: block; }
+#room-jazz .label .t { font-family: var(--font-jazz); font-weight: 600; font-size: var(--step-1); letter-spacing: 0.05em; }
+#room-jazz .work.featured .label .t { font-size: var(--step-2); }
+#room-jazz .visit { color: var(--jazz-accent); }
+#room-jazz .visit:hover { background: var(--jazz-accent); color: var(--jazz-bg); }
+#room-jazz .play { background: var(--jazz-accent); color: var(--jazz-bg); }
+#room-jazz .lineup {
+  display: flex; flex-wrap: wrap; gap: 6px 22px;
+  font-family: var(--font-jazz); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  font-size: var(--step-0);
+  color: var(--jazz-accent);
+}
+.thumb.jazz {
+  background:
+    radial-gradient(circle at var(--sx) 38%, rgba(232,190,110,.55) 0 7%, rgba(201,163,91,.18) 18%, transparent 42%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 2px, transparent 2px 16px),
+    linear-gradient(160deg, hsl(var(--h) 48% 22%) 0%, #070a14 85%);
+}
+
+/* ── 展示室Ⅲ 雨月座 ── */
+#room-ugetsu {
+  background:
+    radial-gradient(ellipse 70% 45% at 88% 0%, var(--ugetsu-deep), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 0% 100%, var(--ugetsu-deep), transparent 70%),
+    var(--ugetsu-bg);
+  color: var(--ugetsu-ink);
+}
+#room-ugetsu .room-no, #room-ugetsu .label .meta, #room-ugetsu .tags { color: var(--ugetsu-muted); }
+#room-ugetsu .room-title {
+  font-family: var(--font-ugetsu-title);
+  font-weight: 700;
+  font-size: clamp(3rem, 12vw, 6.5rem);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  color: var(--ugetsu-title);
+  text-shadow: 3px 3px 0 var(--ugetsu-sh1), 6px 6px 0 var(--ugetsu-sh2);
+}
+#room-ugetsu .label .t { font-family: var(--font-ugetsu); font-size: var(--step-0); letter-spacing: 0.04em; }
+#room-ugetsu .work.featured .label .t { font-size: var(--step-1); }
+#room-ugetsu .visit { color: var(--ugetsu-hi); }
+#room-ugetsu .visit:hover { background: var(--ugetsu-hi); color: var(--ugetsu-bg); }
+#room-ugetsu .play { background: var(--ugetsu-accent); color: var(--ugetsu-ink); }
+.thumb.ugetsu {
+  background:
+    radial-gradient(circle at 50% 58%, transparent 0 10%, rgba(7,8,15,.82) 70%),
+    repeating-conic-gradient(from var(--a) at 50% 58%, #ff3d9a 0 7deg, #07080f 7deg 14deg, #3a5cff 14deg 22deg, #07080f 22deg 28deg, #dcf23a 28deg 31deg, #07080f 31deg 36deg);
+}
+
+.badge {
+  position: absolute; left: 12px; top: 12px;
+  font-size: 11px; letter-spacing: 0.2em;
+  padding: 4px 10px;
+  background: var(--ugetsu-hi); color: var(--ugetsu-bg);
+}
+/* 開幕告知の札 */
+.soon {
+  align-self: start;
+  display: grid; gap: 14px;
+  padding: 24px 22px;
+  border: 1px solid var(--ugetsu-line);
+  outline: 1px solid var(--ugetsu-line);
+  outline-offset: 5px;
+}
+.soon-k { font-size: 11px; letter-spacing: 0.3em; color: var(--ugetsu-hi); }
+.soon-t { font-family: var(--font-ugetsu-title); font-weight: 700; font-size: var(--step-2); line-height: 1.35; color: var(--ugetsu-hi); }
+.soon-d { font-size: var(--step--1); color: var(--ugetsu-muted); }
+@media (max-width: 900px) { #room-ugetsu .work.featured { grid-column: span 2; } #room-ugetsu .soon { grid-column: span 2; } }
+@media (max-width: 560px) { #room-ugetsu .work.featured, #room-ugetsu .soon { grid-column: auto; } }
+
+
+/* 受賞・出演の表記 */
+.honors { display: flex; flex-wrap: wrap; gap: 4px 28px; font-size: var(--step--1); letter-spacing: 0.06em; color: var(--wall-muted); }
+.honors span::before, .award::before { content: "✦"; margin-right: 8px; }
+.award { font-size: var(--step--1); letter-spacing: 0.04em; margin-top: 4px; }
+#room-hill .award { color: var(--hill-accent); }
+.cast { display: flex; flex-wrap: wrap; gap: 2px 22px; font-size: var(--step--1); letter-spacing: 0.08em; }
+.note { font-size: 11px; opacity: .7; }
+#room-jazz .lineup { gap: 10px 26px; }
+#room-jazz .lineup span { display: grid; line-height: 1.25; }
+#room-jazz .lineup b { font-weight: 800; font-size: var(--step-1); }
+#room-jazz .lineup small { font-family: var(--font-body); font-size: 11px; color: var(--jazz-muted); letter-spacing: 0.12em; text-transform: none; }
+#room-ugetsu .cast { color: var(--ugetsu-hi); }
+.honors-list { display: grid; gap: 4px; margin-top: 24px; }
+.honors-list dl { margin: 0; display: grid; }
+.honors-list dl div { display: grid; grid-template-columns: 5.5em minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--wall-line); }
+.honors-list dt { font-size: var(--step--1); color: var(--wall-muted); font-variant-numeric: tabular-nums; }
+.honors-list dd { margin: 0; font-size: var(--step--1); }
+.honors-list dd b { display: block; font-family: var(--font-mincho); font-weight: 600; font-size: var(--step-1); line-height: 1.5; }
+
+/* 出演者・メンバー */
+.cast-block { display: grid; gap: 18px; border-top: 1px solid; padding-top: 28px; }
+#room-hill .cast-block { border-color: var(--hill-line); }
+#room-jazz .cast-block { border-color: var(--jazz-line); }
+#room-ugetsu .cast-block { border-color: var(--ugetsu-line); }
+.cast-h { font-size: var(--step--1); letter-spacing: 0.3em; opacity: .75; }
+.cast-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 28px 40px; }
+.person { display: grid; grid-template-columns: clamp(88px, 22vw, 132px) minmax(0, 1fr); gap: 20px; align-items: start; min-width: 0; }
+.person-text { display: grid; gap: 4px; min-width: 0; }
+.portrait { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; max-width: 100%; }
+#room-hill .portrait { border-radius: 50%; }
+#room-ugetsu .portrait { box-shadow: 5px 5px 0 var(--ugetsu-accent); }
+.br-wide { display: none; }
+@media (min-width: 960px) { .br-wide { display: inline; } }
+.band { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 20px 40px; align-items: center; }
+@media (max-width: 700px) { .band { grid-template-columns: 1fr; } .band-photo { max-width: 360px; } }
+.band-photo { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; max-width: 100%; }
+.band-text { display: grid; gap: 14px; min-width: 0; }
+.band-members { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: var(--step--1); color: var(--jazz-muted); }
+.band-members b { font-family: var(--font-jazz); font-weight: 800; font-size: var(--step-0); letter-spacing: 0.08em; color: var(--jazz-accent); margin-right: 8px; }
+.person h3 { font-size: var(--step-2); line-height: 1.3; }
+.person .ro { font-size: 11px; letter-spacing: 0.25em; opacity: .7; }
+.person .role { font-size: var(--step--1); letter-spacing: 0.1em; }
+.person .bio { font-size: var(--step--1); line-height: 1.9; margin-top: 8px; max-width: 32em; }
+#room-hill .person h3 { font-family: var(--font-mincho); }
+#room-hill .person .role { color: var(--hill-accent); }
+#room-ugetsu .person h3 { font-family: var(--font-ugetsu-title); font-weight: 700; color: var(--ugetsu-hi); }
+#room-ugetsu .person .role { color: var(--ugetsu-hi); }
+
+/* SNS・お問い合わせ */
+.entrance-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.sns { display: flex; gap: 10px; }
+.sns a {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border: 1px solid var(--wall-line);
+  border-radius: 50%;
+  color: var(--wall-ink);
+  transition: background-color .3s, color .3s;
+}
+.sns a:hover { background: var(--wall-ink); color: var(--wall); }
+.sns svg { width: 17px; height: 17px; }
+.follow, .contact { display: grid; gap: 4px; margin-top: 28px; }
+.follow .eyebrow, .contact .eyebrow { margin-bottom: 6px; }
+.contact p:not(.eyebrow) { font-size: var(--step--1); }
+
+/* ── 出口 ── */
+.exit .inner {
+  padding-block: clamp(56px, 10vw, 104px) clamp(40px, 8vw, 72px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px 64px;
+}
+@media (max-width: 760px) { .exit .inner { grid-template-columns: 1fr; } }
+.exit h2 { font-family: var(--font-mincho); font-size: var(--step-2); }
+.exit .eyebrow { font-size: var(--step--1); letter-spacing: 0.3em; color: var(--wall-muted); margin-bottom: 12px; }
+.bio { display: grid; gap: 14px; max-width: 32em; }
+.bio p { font-family: var(--font-mincho); }
+.timeline { list-style: none; margin: 8px 0 0; padding: 0; display: grid; }
+.timeline li {
+  display: grid; grid-template-columns: 5.5em minmax(0, 1fr); gap: 12px;
+  padding: 10px 0; border-top: 1px solid var(--wall-line);
+  font-size: var(--step--1);
+}
+.timeline li span:first-child { color: var(--wall-muted); font-variant-numeric: tabular-nums; }
+.links { display: grid; gap: 0; align-content: start; }
+.links > a {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--wall-line);
+  text-decoration: none;
+}
+.links > a:last-of-type { border-bottom: 1px solid var(--wall-line); }
+.links > a .nm { font-family: var(--font-mincho); font-size: var(--step-1); }
+.links > a .sm { font-size: var(--step--1); color: var(--wall-muted); white-space: nowrap; }
+.links > a:hover .nm { text-decoration: underline; text-underline-offset: 5px; }
+footer { border-top: 1px solid var(--wall-line); }
+footer .inner { padding-block: 18px; font-size: var(--step--1); color: var(--wall-muted); }
+
+/* 現在地の表示 */
+.here {
+  position: fixed;
+  right: calc(14px + env(safe-area-inset-right, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  z-index: 20;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  display: grid;
+  max-width: calc(100vw - 28px);
+  background: var(--wall);
+  color: var(--wall-ink);
+  border: 1px solid var(--wall-line);
+  transition: background-color .5s, color .5s, border-color .5s;
+}
+#here-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px;
+  font: inherit; letter-spacing: inherit; color: inherit;
+  background: none; border: 0; cursor: pointer;
+  text-align: left;
+}
+.here-l { opacity: .6; }
+.here-caret { font-size: 8px; margin-left: auto; transition: transform .3s; }
+#here-btn[aria-expanded="true"] .here-caret { transform: rotate(180deg); }
+.here-menu { display: grid; padding-block: 6px; border-bottom: 1px solid; border-bottom-color: inherit; }
+.here-menu[hidden] { display: none; }
+.here-menu a { padding: 8px 14px; text-decoration: none; letter-spacing: 0.06em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.here-menu a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.here-menu a[aria-current="location"]::before { content: "● "; font-size: 9px; vertical-align: 2px; }
+.here-menu a:not([aria-current="location"]) { padding-left: 28px; }
+.here[data-room="hill"] { background: var(--hill-bg); color: var(--hill-ink); border-color: var(--hill-line); }
+.here[data-room="jazz"] { background: var(--jazz-bg); color: var(--jazz-accent); border-color: var(--jazz-line); }
+.here[data-room="ugetsu"] { background: var(--ugetsu-bg); color: var(--ugetsu-hi); border-color: var(--ugetsu-line); }
+@media (prefers-reduced-motion: reduce) {
+  .thumb, .here, .plan a, .visit { transition: none; }
+}
+
+/* Artifact の外で表示するための基本設定 */
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="proto-note"><div class="inner">公開準備中のプレビュー版です。作品はYouTubeの動画につながっています。雨月座のチャンネルは11月から公開予定です。</div></div>
+
+<!-- エントランス -->
+<header class="entrance" id="entrance">
+  <div class="inner">
+    <div class="entrance-head">
+      <div class="entrance-top"><p class="eyebrow">SINCE 1997</p><div class="sns"><a href="https://x.com/from_ochikyumi" target="_blank" rel="noopener" aria-label="X（@from_ochikyumi）"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a href="https://www.instagram.com/from_ochikyumi" target="_blank" rel="noopener" aria-label="Instagram（@from_ochikyumi）"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/></g><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a></div></div>
+      <h1>居月ナオ<span class="roman">NAO ORITSUKI — MUSIC &amp; FILM</span></h1>
+      <p class="profession">音楽家・映像作家</p>
+      <p class="greeting">私が届けたいのは「記憶を奏でる音楽」です。<br>音楽は、時にノスタルジックに、時に自由奔放に、そして時に妖しく、いくつもの顔を持って旅をしています。<br>あなたの気の向くまま、どうぞごゆっくり歩いてみてください。</p>
+      <p class="honors"><span>YAMAHA XG sound world '97　審査員特別賞</span><span>AIgekijo2026　一般公募部門 上映</span></p>
+    </div>
+    <section class="news" aria-labelledby="t-news">
+      <h2 id="t-news">お知らせ</h2>
+      <ol class="news-list">
+        <!-- 新しいお知らせは、この下のいちばん上に1行足す -->
+        <li><time datetime="2026-11-01">2026.11.01</time><span>公式ポートフォリオサイトを開設しました。</span></li>
+      </ol>
+    </section>
+    <nav class="floorplan" aria-label="三つの場所">
+      <h2>三つの場所</h2>
+      <div class="plan">
+        <a href="#room-hill"><span class="no">展示室 Ⅰ</span><span class="nm">お地球見の丘より。</span><span class="ds">ピアノを中心としたノスタルジックな音楽、心が落ち着く穏やかな場所／HP時代のアーカイブ室</span></a>
+        <a href="#room-jazz"><span class="no">展示室 Ⅱ</span><span class="nm">NEBULA CLAWS QUARTET</span><span class="ds">ソプラノサックス、ピアノ、ドラム、ウッドベースの4猫編成によるジャズカルテット</span></a>
+        <a href="#room-ugetsu"><span class="no">展示室 Ⅲ</span><span class="nm">雨月座</span><span class="ds">レトロなジャズロックに、毒と色気と狂気を少々</span></a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="corridor" style="--from: var(--wall); --to: var(--hill-bg); --chip: var(--hill-bg); --c: var(--hill-ink)" aria-hidden="true"><span>展示室Ⅰへ</span></div>
+
+<!-- 展示室Ⅰ -->
+<section class="room" id="room-hill" data-room="hill" aria-labelledby="t-hill">
+  <div class="inner">
+    <div class="room-head">
+      <div>
+        <p class="room-no">展示室 Ⅰ ／ ROOM ONE</p>
+        <h2 class="room-title" id="t-hill">お地球見の丘より。</h2>
+      </div>
+      <div class="room-intro">
+        <p>頑張っているあなたがそっと腰を下ろすための小さな丘をつくりたくて「記憶を奏でる音楽」をお届けしています。</p>
+        <p class="cast"><span>ボーカル　東雲こと子　他</span></p>
+        <p class="tags">心穏やかなピアノ ・ 日常 ・ ノスタルジー ・ ホームページ時代の楽曲アーカイブ</p>
+        <a class="visit" href="https://www.youtube.com/channel/UCxEU4TGI-jVkG482-qm3_Wg" target="_blank" rel="noopener">YouTubeチャンネルへ ↗</a>
+      </div>
+    </div>
+    <div class="works" data-works="hill"></div>
+
+    <div class="cast-block">
+      <p class="cast-h">CAST ／ 出演者</p>
+      <div class="cast-cards">
+        <article class="person">
+          <img class="portrait" src="cast/kotoko.jpg" alt="東雲こと子" loading="lazy">
+          <div class="person-text">
+          <h3>東雲こと子</h3>
+          <p class="ro">KOTOKO SHINONOME</p>
+          <p class="role">ボーカル</p>
+          <p class="bio">2026年、シングル「春を待つ」でソロアーティストとしてデビュー。7月の「君に還る世界」では「逆再生ボーカル」として話題になった。「お地球見の丘より。」の世界観に寄り添うメインボーカリスト。ときどき番組「ことこより。」も手がけている。</p>
+          </div>
+        </article>
+      </div>
+      <p class="note">※AIで生み出した架空の人物です。</p>
+    </div>
+
+    <details class="archive" open>
+      <summary>
+        <h3>アーカイブ室</h3>
+        <span class="sub">ホームページ時代の曲と総集編</span>
+        <span class="tog"></span>
+      </summary>
+      <p class="lead">個人ホームページ「お地球見の丘より。」で発表していた曲を、当時のMIDIの音のまま残しています。</p>
+      <div class="works archive-works" data-works="archive"></div>
+    </details>
+  </div>
+</section>
+
+<div class="corridor" style="--from: var(--hill-bg); --to: var(--jazz-bg); --chip: var(--jazz-bg); --c: var(--jazz-accent)" aria-hidden="true"><span>展示室Ⅱへ</span></div>
+
+<!-- 展示室Ⅱ -->
+<section class="room" id="room-jazz" data-room="jazz" aria-labelledby="t-jazz">
+  <div class="inner">
+    <div class="room-head">
+      <div>
+        <p class="room-no">展示室 Ⅱ ／ ROOM TWO</p>
+        <h2 class="room-title" id="t-jazz">Nebula Claws <em>Quartet</em></h2>
+      </div>
+      <div class="room-intro">
+        <p>整うだけでは足りないあなたへ、心ゆらす夜ジャズ。<br class="br-wide">夜空の広がりと星雲のきらめきから生まれた、4猫編成のジャズバンドが、居月ナオの曲をドライブ感のあるジャズに編み直します。</p>
+        <a class="visit" href="https://www.youtube.com/@NCQ_ochikyumi" target="_blank" rel="noopener">YouTubeチャンネルへ ↗</a>
+      </div>
+    </div>
+    <div class="works" data-works="jazz"></div>
+
+    <div class="cast-block">
+      <p class="cast-h">MEMBERS ／ メンバー</p>
+      <div class="band">
+        <img class="band-photo" src="cast/ncq.jpg" alt="NEBULA CLAWS QUARTETの4匹" loading="lazy">
+        <div class="band-text">
+          <p>夜空の広がりと星雲のきらめきからインスピレーションを受けた、4猫編成のジャズバンド。</p>
+          <ul class="band-members">
+            <li><b>YOI</b>Piano</li>
+            <li><b>ENRAI</b>Drums</li>
+            <li><b>SHIJIMA</b>Double Bass</li>
+            <li><b>SAKU</b>Soprano Saxophone</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">※AIで生み出した架空のジャズバンドです。</p>
+    </div>
+  </div>
+</section>
+
+<div class="corridor" style="--from: var(--jazz-bg); --to: var(--ugetsu-bg); --chip: var(--ugetsu-bg); --c: var(--ugetsu-hi)" aria-hidden="true"><span>展示室Ⅲへ</span></div>
+
+<!-- 展示室Ⅲ -->
+<section class="room" id="room-ugetsu" data-room="ugetsu" aria-labelledby="t-ugetsu">
+  <div class="inner">
+    <div class="room-head">
+      <div>
+        <p class="room-no">展示室 Ⅲ ／ ROOM THREE</p>
+        <h2 class="room-title" id="t-ugetsu">雨月座</h2>      </div>
+      <div class="room-intro">
+        <p>レトロで奇抜、サイケでハレンチなジャズロック。毒と色気と狂気を少々。</p>
+        <p class="tags">レトロ ・ ジャズロック ・ 妖しげなムード</p>
+        <p class="cast"><span>座長　雨宮 櫂</span><span>役者・歌　ユラ</span></p>
+        <a class="visit" href="https://www.youtube.com/@ugetsuza" target="_blank" rel="noopener">YouTubeチャンネルへ ↗</a>
+      </div>
+    </div>
+    <div class="works" data-works="ugetsu"></div>
+    <template id="ugetsu-soon">
+      <div class="soon">
+        <p class="soon-k">NOW PREPARING</p>
+        <p class="soon-t">2026年11月、<br>幕があがります。</p>
+        <p class="soon-d">雨月座のチャンネルは、11月から作品の公開をはじめます。</p>
+      </div>
+    </template>
+
+    <div class="cast-block">
+      <p class="cast-h">CAST ／ 一座</p>
+      <div class="cast-cards">
+        <article class="person">
+          <img class="portrait" src="cast/amemiya.jpg" alt="雨宮 櫂" loading="lazy">
+          <div class="person-text">
+          <h3>雨宮 櫂</h3>
+          <p class="ro">KAI AMEMIYA</p>
+          <p class="role">座長</p>
+          <p class="bio">2023年に俳優としてデビューし、舞台を中心に活躍。2026年1月、短編アートフィルム「渦」で主演を務める。「雨月座」の座長。趣味はバスケットボール観戦。</p>
+          </div>
+        </article>
+        <article class="person">
+          <img class="portrait" src="cast/yura.jpg" alt="ユラ" loading="lazy">
+          <div class="person-text">
+          <h3>ユラ</h3>
+          <p class="ro">YURA</p>
+          <p class="role">役者・歌</p>
+          <p class="bio">2026年、シングル「その森に入ってはいけない」でソロアーティストとしてデビュー。「雨月座」では役者としても活躍する。</p>
+          </div>
+        </article>
+      </div>
+      <p class="note">※AIで生み出した架空の人物です。</p>
+    </div>
+  </div>
+</section>
+
+<div class="corridor" style="--from: var(--ugetsu-bg); --to: var(--wall); --chip: var(--wall); --c: var(--wall-ink)" aria-hidden="true"><span>出口へ</span></div>
+
+<!-- 出口 -->
+<section class="exit" id="exit" aria-labelledby="t-exit">
+  <div class="inner">
+    <div class="bio">
+      <p class="eyebrow">ABOUT ／ 作家紹介</p>
+      <h2 id="t-exit">居月ナオについて</h2>
+      <p>ピアノを中心にオリジナル曲を制作。2000年から約10年、個人ホームページ「お地球見の丘より。」で作品を発表し、現在はYouTubeを中心に活動している。最近はAIの力を借りて自作曲をアレンジしたり、動画生成によるショートフィルム（MV）を制作したりしている。</p>
+      <ol class="timeline">
+        <li><span>1997</span><span>音楽活動をはじめる。「星屑の広がる箱」が YAMAHA XG sound world '97 審査員特別賞を受賞</span></li>
+        <li><span>2000</span><span>個人ホームページ「お地球見の丘より。」を開設。MIDIで作った曲を発表しはじめる</span></li>
+        <li><span>〜2010頃</span><span>約10年間、ホームページで作品を発表</span></li>
+        <li><span>現在</span><span>YouTubeの3つのチャンネルで活動（雨月座は2026年11月から公開）</span></li>
+      </ol>
+      <div class="honors-list">
+        <p class="eyebrow">AWARDS ／ 受賞・上映</p>
+        <dl>
+          <div><dt>1997</dt><dd><b>YAMAHA XG sound world '97</b>審査員特別賞受賞　「星屑の広がる箱」</dd></div>
+          <div><dt>2026</dt><dd><b>AIgekijo2026</b>一般公募部門 上映作品　「渦 “Vortex”」</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="links">
+      <p class="eyebrow">CHANNELS ／ チャンネル</p>
+      <a href="https://www.youtube.com/channel/UCxEU4TGI-jVkG482-qm3_Wg" target="_blank" rel="noopener"><span class="nm">お地球見の丘より。</span><span class="sm">YouTube ↗</span></a>
+      <a href="https://www.youtube.com/@NCQ_ochikyumi" target="_blank" rel="noopener"><span class="nm">NEBULA CLAWS QUARTET</span><span class="sm">YouTube ↗</span></a>
+      <a href="https://www.youtube.com/@ugetsuza" target="_blank" rel="noopener"><span class="nm">雨月座</span><span class="sm">YouTube ↗</span></a>
+      <div class="follow">
+        <p class="eyebrow">SNS</p>
+        <div class="sns"><a href="https://x.com/from_ochikyumi" target="_blank" rel="noopener" aria-label="X（@from_ochikyumi）"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a href="https://www.instagram.com/from_ochikyumi" target="_blank" rel="noopener" aria-label="Instagram（@from_ochikyumi）"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/></g><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a></div>
+      </div>
+      <div class="contact">
+        <p class="eyebrow">CONTACT ／ お問い合わせ</p>
+        <p>現在はお仕事の依頼は受けておりません。</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer><div class="inner">© 居月ナオ ／ お地球見の丘より。since 1997</div></footer>
+
+<nav class="here" id="here" data-room="entrance" aria-label="館内の移動">
+  <div class="here-menu" id="here-menu" hidden>
+    <a href="#entrance" data-go="entrance" aria-current="location">入口</a>
+    <a href="#room-hill" data-go="hill">展示室Ⅰ　お地球見の丘より。</a>
+    <a href="#room-jazz" data-go="jazz">展示室Ⅱ　NEBULA CLAWS QUARTET</a>
+    <a href="#room-ugetsu" data-go="ugetsu">展示室Ⅲ　雨月座</a>
+    <a href="#exit" data-go="exit">出口</a>
+  </div>
+  <button type="button" id="here-btn" aria-expanded="false" aria-controls="here-menu"><span class="here-l">現在地</span><span id="here-name">入口</span><span class="here-caret" aria-hidden="true">▲</span></button>
+</nav>
+
+<script>
+/* ===== 作品リスト =====
+   新しい動画を載せるときは、この中に1行足すだけ。
+   id は動画URLの youtu.be/ の後ろ（または v= の後ろ）の11文字。
+   サムネイルは thumbs/ フォルダの画像を使い、無ければYouTubeから直接読み込みます。 */
+const CHANNELS = {
+  hill: "https://www.youtube.com/channel/UCxEU4TGI-jVkG482-qm3_Wg",
+  jazz: "https://www.youtube.com/@NCQ_ochikyumi",
+  ugetsu: "https://www.youtube.com/@ugetsuza",
+};
+const WORKS = {
+  hill: [
+    { title: "君のいた季節", kind: "Music Film", id: "sJhZYXoRfPY" },
+    { title: "渦 “Vortex”", kind: "Music Film ／ 主演 雨宮 櫂", id: "GZAYExHV5mA", award: "AIgekijo2026 一般公募部門 上映作品" },
+    { title: "そして少年は空を目指す", kind: "ピアノと映像作品", id: "bj8Eq_-_9Zg" },
+    { title: "それは日常", kind: "Music Film", id: "gwuHcTnGX6M" },
+    { title: "夜の栞", kind: "眠る前のピアノ組曲", id: "JDDEdSshiSE" },
+    { title: "君に還る世界", kind: "Music Film ／ ボーカル 東雲こと子", id: "sWLduA4zeUk" },
+  ],
+  archive: [
+    { title: "恋せよ、その翼をもて", kind: "アーカイブ", id: "qVb-tXtpnQ0" },
+    { title: "きみが心に棲みついた", kind: "アーカイブ", id: "quOhtgbG-ps" },
+    { title: "お地球見の丘より。", kind: "アーカイブ", id: "BZpqEzSjHTw" },
+    { title: "星屑の広がる箱", kind: "総集編 1990〜2000", id: "L-ABHnbrLU8", award: "YAMAHA XG sound world '97 審査員特別賞" },
+    { title: "聴こえますか", kind: "続・総集編 1994〜2004", id: "gQ5kIFwl5jM" },
+    { title: "組曲「恋ひとつ」", kind: "組曲", id: "6iXQe5LH_rA" },
+  ],
+  jazz: [
+    { title: "TSUKURITE", kind: "ツクリテ", id: "Mj4Ox1gP3yo" },
+    { title: "The Chains of Preciosa", kind: "プレシオスの鎖", id: "f2gDdB-1w8Y" },
+    { title: "Chasing Dragonfly", kind: "シオカラトンボ", id: "joaOd6vsE5g" },
+    { title: "Vortex", kind: "渦", id: "OtsLSd2vVX4" },
+    { title: "The True Happiness of Us All", kind: "ほんまのしあわせ", id: "MF_jFgUqSW0" },
+    { title: "Blue Forget-Me-Nots", kind: "勿忘草の咲く丘で", id: "s2dbVpEgtks" },
+  ],
+  ugetsu: [
+    { title: "その森に入ってはいけない", kind: "ユラ デビューシングル ／ 2026年11月 公開予定", id: "iknqzD98FzE", soon: true },
+  ],
+};
+
+function workEl(room, w, i) {
+  const el = document.createElement("article");
+  el.className = "work" + (i === 0 && room !== "archive" ? " featured" : "");
+  const style = room === "archive" ? "hill" : room;
+  /* 公開前の作品はチャンネルへ案内する */
+  const href = w.id && !w.soon ? `https://www.youtube.com/watch?v=${w.id}` : CHANNELS[style];
+
+  let thumb;
+  if (w.id) {
+    thumb = document.createElement("img");
+    thumb.className = "thumb";
+    thumb.alt = w.title;
+    thumb.loading = i < 3 ? "eager" : "lazy";
+    thumb.src = `thumbs/${w.id}.jpg`;
+    thumb.addEventListener("error", () => { thumb.src = `https://i.ytimg.com/vi/${w.id}/hqdefault.jpg`; }, { once: true });
+  } else {
+    thumb = document.createElement("div");
+    thumb.className = "thumb " + style;
+    thumb.setAttribute("role", "img");
+    thumb.setAttribute("aria-label", "サムネイル準備中");
+    thumb.style.setProperty("--h", 190 + i * 37);
+    thumb.style.setProperty("--sx", (25 + (i * 23) % 55) + "%");
+    thumb.style.setProperty("--a", (i * 17) + "deg");
+  }
+
+  const frame = document.createElement("a");
+  frame.className = "frame";
+  frame.href = href; frame.target = "_blank"; frame.rel = "noopener";
+  frame.append(thumb);
+  const play = document.createElement("span");
+  play.className = "play"; play.setAttribute("aria-hidden", "true"); play.textContent = "▶";
+  frame.append(play);
+  if (w.soon) {
+    const badge = document.createElement("span");
+    badge.className = "badge"; badge.textContent = "COMING SOON";
+    frame.append(badge);
+  }
+  el.append(frame);
+
+  const label = document.createElement("div");
+  label.className = "label";
+  label.innerHTML = `<span class="t"></span><span class="meta"><span></span></span>`;
+  label.querySelector(".t").textContent = w.title;
+  label.querySelector(".meta span").textContent = w.kind;
+  if (w.award) {
+    const aw = document.createElement("span");
+    aw.className = "award"; aw.textContent = w.award;
+    label.append(aw);
+  }
+  el.append(label);
+  return el;
+}
+
+for (const [room, list] of Object.entries(WORKS)) {
+  const host = document.querySelector(`[data-works="${room}"]`);
+  list.forEach((w, i) => host.append(workEl(room, w, i)));
+}
+const soon = document.getElementById("ugetsu-soon");
+document.querySelector('[data-works="ugetsu"]').append(soon.content.cloneNode(true));
+
+/* 現在地：画面の中央線より上に先頭が来ている、いちばん下の区画を現在地とする */
+const here = document.getElementById("here");
+const hereBtn = document.getElementById("here-btn");
+const hereName = document.getElementById("here-name");
+const hereMenu = document.getElementById("here-menu");
+const NAMES = { entrance: "入口", hill: "展示室Ⅰ", jazz: "展示室Ⅱ", ugetsu: "展示室Ⅲ", exit: "出口" };
+const spots = [
+  [document.getElementById("entrance"), "entrance"],
+  ...[...document.querySelectorAll(".room")].map(r => [r, r.dataset.room]),
+  [document.getElementById("exit"), "exit"],
+];
+function updateHere() {
+  const mid = innerHeight / 2;
+  let key = spots[0][1];
+  for (const [el, k] of spots) if (el.getBoundingClientRect().top <= mid) key = k;
+  const root = document.scrollingElement;
+  if (root.scrollTop + innerHeight >= root.scrollHeight - 4) key = "exit";
+  if (here.dataset.room === key) return;
+  here.dataset.room = key;
+  hereName.textContent = NAMES[key];
+  hereMenu.querySelectorAll("a").forEach(a => {
+    if (a.dataset.go === key) a.setAttribute("aria-current", "location");
+    else a.removeAttribute("aria-current");
+  });
+}
+let ticking = false;
+function requestUpdate() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => { ticking = false; updateHere(); });
+}
+addEventListener("scroll", requestUpdate, { passive: true });
+addEventListener("resize", requestUpdate);
+addEventListener("hashchange", requestUpdate);
+addEventListener("load", updateHere);
+updateHere();
+
+/* ページ内リンクは自分でスクロールさせる（埋め込み表示でも確実に移動するように） */
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.addEventListener("click", e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const target = document.getElementById(a.getAttribute("href").slice(1));
+  if (!target) return;
+  e.preventDefault();
+  target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+});
+
+/* 現在地のプレートから各部屋へ移動 */
+function setMenu(open) {
+  hereMenu.hidden = !open;
+  hereBtn.setAttribute("aria-expanded", String(open));
+}
+hereBtn.addEventListener("click", () => setMenu(hereMenu.hidden));
+hereMenu.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+document.addEventListener("click", e => { if (!here.contains(e.target)) setMenu(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+</script>
+</body>
+</html>

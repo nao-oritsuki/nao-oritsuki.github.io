@@ -9,7 +9,7 @@
 <meta name="description" content="居月ナオの音楽と映像：お地球見の丘より。／NEBULA CLAWS QUARTET／雨月座">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&family=Big+Shoulders+Display:wght@600;800&family=Dela+Gothic+One&family=Kaisei+Decol:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&family=Big+Shoulders+Display:wght@600;800&family=Dela+Gothic+One&family=Kaisei+Decol:wght@700&family=Marcellus+SC&display=swap">
 <style>
 /* Layout: 上に固定の案内帯。HOME（旋律の線が流れる題字）→ NEWS → WORKS一覧 → WORKS Ⅰ（夕暮れの丘）→ Ⅱ（夜のクラブ）→ Ⅲ（毒レモン）→ PROFILE。
    区画ごとに配色が変わり、区画のあいだに「次へ」の案内を置く。 */
@@ -48,6 +48,7 @@
   --font-body: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
   --font-jazz: "Big Shoulders Display", "Arial Narrow", sans-serif;
   --font-ugetsu: "Dela Gothic One", "Hiragino Kaku Gothic StdN", sans-serif;
+  --font-copper: "Copperplate", "Copperplate Gothic Bold", "Copperplate Gothic", "Marcellus SC", serif;
   --font-ugetsu-title: "Kaisei Decol", "Hiragino Mincho ProN", serif;
 
   --step--1: 0.8125rem;
@@ -153,29 +154,60 @@ p { margin: 0; }
   letter-spacing: 0.3em;
   color: var(--wall-muted);
 }
-.plan {
+/* WORKS一覧：縦長のポスターを3枚。後ろに各チャンネルの色の板をずらして重ねる */
+.posters {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border: 1px solid var(--wall-ink);
+  gap: clamp(24px, 3.4vw, 44px);
+  padding: 6px 14px 64px 0;
 }
-.plan a {
-  display: grid;
-  gap: 6px;
-  align-content: start;
-  padding: 18px 16px 22px;
-  text-decoration: none;
-  border-right: 1px solid var(--wall-ink);
-  min-height: 150px;
-  transition: background-color .4s, color .4s;
+.poster { display: grid; gap: 22px; align-content: start; min-width: 0; color: inherit; text-decoration: none; }
+.poster:nth-child(2) { margin-top: 56px; }
+.p-hill { --pc: var(--hill-accent); --pf: var(--font-mincho); }
+.p-jazz { --pc: var(--jazz-bg); --pf: var(--font-copper); }
+.p-ugetsu { --pc: var(--ugetsu-bg); --pf: var(--font-ugetsu-title); }
+.poster-frame { position: relative; display: block; aspect-ratio: 9 / 16; max-width: 100%; }
+.poster-frame::before {
+  content: ""; position: absolute; inset: 0;
+  background: var(--pc);
+  transform: translate(12px, 12px);
+  transition: transform .5s ease;
 }
-.plan a:last-child { border-right: 0; }
-.plan .no { font-size: var(--step--1); letter-spacing: 0.2em; color: var(--wall-muted); }
-.plan .nm { font-family: var(--font-mincho); font-size: var(--step-1); line-height: 1.4; }
-.plan .ds { font-size: var(--step--1); color: var(--wall-muted); line-height: 1.6; }
-.plan a[href="#room-hill"]:hover { background: var(--hill-bg); }
-.plan a[href="#room-jazz"]:hover { background: var(--jazz-bg); color: var(--jazz-ink); }
-.plan a[href="#room-ugetsu"]:hover { background: var(--ugetsu-bg); color: var(--ugetsu-ink); }
-.plan a:hover .no, .plan a:hover .ds { color: inherit; opacity: .75; }
+.poster-frame img {
+  position: relative; display: block;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s ease;
+}
+.poster:hover .poster-frame::before { transform: translate(18px, 18px); }
+.poster:hover .poster-frame img { transform: translate(-4px, -4px); }
+.poster-cap { display: grid; gap: 6px; }
+.poster-cap .no { display: flex; align-items: center; gap: 10px; font-size: var(--step--1); letter-spacing: 0.25em; color: var(--wall-muted); }
+.poster-cap .no::before { content: ""; width: 28px; height: 2px; background: var(--pc); }
+.poster-cap .nm { font-family: var(--pf); font-size: var(--step-1); line-height: 1.4; }
+.p-jazz .poster-cap .nm, .p-ugetsu .poster-cap .nm { font-weight: 700; }
+.poster-cap .ds { font-size: var(--step--1); color: var(--wall-muted); line-height: 1.7; }
+.poster:hover .poster-cap .nm { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.swipe-hint { display: none; }
+@media (max-width: 760px) {
+  /* スマホ：ポスターを横に並べてスワイプで見る */
+  .posters {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 64%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin-left: calc(-1 * var(--gutter));
+    margin-right: calc(-1 * var(--gutter-r));
+    padding: 6px var(--gutter-r) 28px var(--gutter);
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .posters::-webkit-scrollbar { display: none; }
+  .poster { scroll-snap-align: start; }
+  .poster:nth-child(2) { margin-top: 0; }
+  .swipe-hint { display: block; justify-self: end; margin-top: -32px; font-size: 11px; letter-spacing: 0.2em; color: var(--wall-muted); }
+}
+@media (prefers-reduced-motion: reduce) { .poster-frame::before, .poster-frame img { transition: none; } }
 @media (max-width: 640px) {
   .plan { grid-template-columns: 1fr; }
   .plan a { border-right: 0; border-bottom: 1px solid var(--wall-ink); min-height: 0; }
@@ -336,8 +368,8 @@ p { margin: 0; }
 #room-jazz { background: var(--jazz-bg); color: var(--jazz-ink); }
 #room-jazz .room-no, #room-jazz .label .meta, #room-jazz .tags { color: var(--jazz-muted); }
 #room-jazz .room-title {
-  font-family: var(--font-jazz);
-  font-weight: 800;
+  font-family: var(--font-copper);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: clamp(2.6rem, 8vw, 5rem);
@@ -572,7 +604,7 @@ img { max-width: 100%; }
   </div>
 </nav>
 
-<div class="proto-note"><div class="inner">公開準備中のプレビュー版です。作品はYouTubeの動画につながっています。雨月座のチャンネルは11月から公開予定です。</div></div>
+<div class="proto-note"><div class="inner">公開準備中のプレビュー版です。作品はYouTubeの動画につながっています。</div></div>
 
 <!-- エントランス -->
 <header class="entrance" id="entrance">
@@ -596,10 +628,20 @@ img { max-width: 100%; }
     </section>
     <nav class="floorplan" id="works" aria-label="WORKS">
       <h2>WORKS</h2>
-      <div class="plan">
-        <a href="#room-hill"><span class="no">WORKS Ⅰ</span><span class="nm">お地球見の丘より。</span><span class="ds">ピアノを中心としたノスタルジックな音楽、心が落ち着く穏やかな場所／HP時代のアーカイブ</span></a>
-        <a href="#room-jazz"><span class="no">WORKS Ⅱ</span><span class="nm">NEBULA CLAWS QUARTET</span><span class="ds">ソプラノサックス、ピアノ、ドラム、ウッドベースの4猫編成によるジャズカルテット</span></a>
-        <a href="#room-ugetsu"><span class="no">WORKS Ⅲ</span><span class="nm">雨月座</span><span class="ds">レトロなジャズロックに、毒と色気と狂気を少々</span></a>
+      <p class="swipe-hint" aria-hidden="true">横にスワイプ →</p>
+      <div class="posters">
+        <a class="poster p-hill" href="#room-hill">
+          <span class="poster-frame"><img src="title/works-1.jpg" alt="お地球見の丘より。のキービジュアル" width="720" height="1280" loading="lazy"></span>
+          <span class="poster-cap"><span class="no">WORKS Ⅰ</span><span class="nm">お地球見の丘より。</span><span class="ds">ピアノを中心としたノスタルジックな音楽、心が落ち着く穏やかな場所／HP時代のアーカイブ</span></span>
+        </a>
+        <a class="poster p-jazz" href="#room-jazz">
+          <span class="poster-frame"><img src="title/works-2.jpg" alt="NEBULA CLAWS QUARTETのキービジュアル" width="720" height="1280" loading="lazy"></span>
+          <span class="poster-cap"><span class="no">WORKS Ⅱ</span><span class="nm">NEBULA CLAWS QUARTET</span><span class="ds">ソプラノサックス、ピアノ、ドラム、ウッドベースの4猫編成によるジャズカルテット</span></span>
+        </a>
+        <a class="poster p-ugetsu" href="#room-ugetsu">
+          <span class="poster-frame"><img src="title/works-3.jpg" alt="雨月座のキービジュアル" width="720" height="1280" loading="lazy"></span>
+          <span class="poster-cap"><span class="no">WORKS Ⅲ</span><span class="nm">雨月座</span><span class="ds">レトロなジャズロックに、毒と色気と狂気を少々</span></span>
+        </a>
       </div>
     </nav>
   </div>
@@ -708,8 +750,8 @@ img { max-width: 100%; }
     <template id="ugetsu-soon">
       <div class="soon">
         <p class="soon-k">NOW PREPARING</p>
-        <p class="soon-t">2026年11月、<br>幕があがります。</p>
-        <p class="soon-d">雨月座のチャンネルは、11月から作品の公開をはじめます。</p>
+        <p class="soon-t">まもなく、<br>幕があがります。</p>
+        <p class="soon-d">雨月座の作品は、これから順に公開していきます。</p>
       </div>
     </template>
 
@@ -731,7 +773,7 @@ img { max-width: 100%; }
           <h3>ユラ</h3>
           <p class="ro">YURA</p>
           <p class="role">役者・歌</p>
-          <p class="bio">2026年、シングル「その森に入ってはいけない」でソロアーティストとしてデビュー。「雨月座」では役者としても活躍する。</p>
+          <p class="bio">2026年、シングル「沈むカラダ」でソロアーティストとしてデビュー。「雨月座」では役者としても活躍する。</p>
           </div>
         </article>
       </div>
@@ -748,12 +790,13 @@ img { max-width: 100%; }
     <div class="bio">
       <p class="eyebrow">PROFILE</p>
       <h2 id="t-exit">居月ナオについて</h2>
-      <p>ピアノを中心にオリジナル曲を制作。2000年から約10年、個人ホームページ「お地球見の丘より。」で作品を発表し、現在はYouTubeを中心に活動している。最近はAIの力を借りて自作曲をアレンジしたり、動画生成によるショートフィルム（MV）を制作したりしている。</p>
+      <p>高校時代、吹奏楽部での経験に刺激を受けながら作曲を始める。1997年に初めてコンテストでの受賞を経験し、それをきっかけに2000年から約10年、個人ホームページ「お地球見の丘より。」にて音楽活動を行なった。現在は生成AIの力を借りながら、YouTubeを中心に活動を続けている。</p>
+      <p>猫とアマガエルが好き。</p>
       <ol class="timeline">
         <li><span>1997</span><span>音楽活動をはじめる。「星屑の広がる箱」が YAMAHA XG sound world '97 審査員特別賞を受賞</span></li>
         <li><span>2000</span><span>個人ホームページ「お地球見の丘より。」を開設。MIDIで作った曲を発表しはじめる</span></li>
         <li><span>〜2010頃</span><span>約10年間、ホームページで作品を発表</span></li>
-        <li><span>現在</span><span>YouTubeの3つのチャンネルで活動（雨月座は2026年11月から公開）</span></li>
+        <li><span>現在</span><span>YouTubeの3つのチャンネルで活動</span></li>
       </ol>
       <div class="honors-list">
         <p class="eyebrow">AWARDS ／ 受賞・上映</p>
@@ -818,7 +861,7 @@ const WORKS = {
     { title: "Blue Forget-Me-Nots", kind: "勿忘草の咲く丘で", id: "s2dbVpEgtks" },
   ],
   ugetsu: [
-    { title: "その森に入ってはいけない", kind: "ユラ デビューシングル ／ 2026年11月 公開予定", id: "iknqzD98FzE", soon: true },
+    { title: "沈むカラダ", kind: "ユラ デビューシングル ／ まもなく公開", id: "9TLe8jiuaHk", soon: true },
   ],
 };
 
@@ -934,6 +977,7 @@ updateHere();
   const STAFF = "rgba(150, 156, 160, 0.42)";
   const SPEED = 16;          // 1秒に進むピクセル
   const LINK_TIME = 0.35;    // 線を1本つなぐのにかかる秒数
+  const LINK_DELAY = 0.8;    // 見え始めてから線をつなぎ始めるまでの秒数
   const STAFF_SHARE = 0.75;  // 五線に収まる星座の割合（全体の75%）
   const IN_STAFF = 0.8;      // 五線に収まる星座で、五線の中に置く粒の割合（約8割）
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1037,15 +1081,16 @@ updateHere();
   }
 
   function draw(t) {
+    if (!W || !H) return;   /* 表示前で大きさが0のときは描かない */
     ctx.globalCompositeOperation = "source-over";
     ctx.clearRect(0, 0, W, H);
     for (const c of stars) {
       const bob = Math.sin(t * 0.6 + c.bob) * gap * 0.25;
       const pos = c.pts.map(p => [c.x + p.dx, yOf(p.pitch) + bob]);
       /* 右へ進むにつれて、線が1本ずつつながっていく */
-      if (c.formedAt === null && c.x + c.w * 0.5 > linkAt) c.formedAt = t;
+      if (c.formedAt === null && c.x + c.w * 0.5 > linkAt) c.formedAt = t + LINK_DELAY;
       const progress = reduce || c.formedAt !== null && c.formedAt < 0 ? 1
-        : c.formedAt === null ? 0 : Math.min(1, (t - c.formedAt) / (LINK_TIME * c.edges.length));
+        : c.formedAt === null ? 0 : Math.max(0, Math.min(1, (t - c.formedAt) / (LINK_TIME * c.edges.length)));
       const total = c.edges.length;
       c.edges.forEach(([i, j], k) => {
         const part = Math.min(1, Math.max(0, progress * total - k));

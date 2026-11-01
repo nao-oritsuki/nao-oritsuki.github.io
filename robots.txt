@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nao-oritsuki.github.io/sitemap.xml

@@ -3,10 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://nao-oritsuki.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="居月ナオ">
+<meta property="og:title" content="NAO ORITSUKI ｜居月ナオ">
+<meta property="og:description" content="居月ナオ（Nao Oritsuki）公式サイト。音楽家・映像作家。お地球見の丘より。／NEBULA CLAWS QUARTET／雨月座">
+<meta property="og:url" content="https://nao-oritsuki.github.io/">
+<meta property="og:image" content="https://nao-oritsuki.github.io/title/works-1.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "居月ナオ", "alternateName": ["Nao Oritsuki", "NAO ORITSUKI"], "jobTitle": "音楽家・映像作家", "url": "https://nao-oritsuki.github.io/", "sameAs": ["https://www.youtube.com/channel/UCxEU4TGI-jVkG482-qm3_Wg", "https://www.youtube.com/@NCQ_ochikyumi", "https://www.youtube.com/@ugetsuza", "https://x.com/from_ochikyumi", "https://www.instagram.com/from_ochikyumi"]}</script>
 <title>NAO ORITSUKI ｜居月ナオ</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="居月ナオの音楽と映像：お地球見の丘より。／NEBULA CLAWS QUARTET／雨月座">
+<meta name="description" content="居月ナオ（Nao Oritsuki）公式サイト。音楽家・映像作家。お地球見の丘より。／NEBULA CLAWS QUARTET／雨月座">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&family=Big+Shoulders+Display:wght@600;800&family=Dela+Gothic+One&family=Kaisei+Decol:wght@700&family=Marcellus+SC&display=swap">
@@ -428,20 +436,8 @@ p { margin: 0; }
   padding: 4px 10px;
   background: var(--ugetsu-hi); color: var(--ugetsu-bg);
 }
-/* 開幕告知の札 */
-.soon {
-  align-self: start;
-  display: grid; gap: 14px;
-  padding: 24px 22px;
-  border: 1px solid var(--ugetsu-line);
-  outline: 1px solid var(--ugetsu-line);
-  outline-offset: 5px;
-}
-.soon-k { font-size: 11px; letter-spacing: 0.3em; color: var(--ugetsu-hi); }
-.soon-t { font-family: var(--font-ugetsu-title); font-weight: 700; font-size: var(--step-2); line-height: 1.35; color: var(--ugetsu-hi); }
-.soon-d { font-size: var(--step--1); color: var(--ugetsu-muted); }
-@media (max-width: 900px) { #room-ugetsu .work.featured { grid-column: span 2; } #room-ugetsu .soon { grid-column: span 2; } }
-@media (max-width: 560px) { #room-ugetsu .work.featured, #room-ugetsu .soon { grid-column: auto; } }
+@media (max-width: 900px) { #room-ugetsu .work.featured { grid-column: span 2; } }
+@media (max-width: 560px) { #room-ugetsu .work.featured { grid-column: auto; } }
 
 
 /* 受賞・出演の表記 */
@@ -602,7 +598,6 @@ img { max-width: 100%; }
   </div>
 </nav>
 
-<div class="proto-note"><div class="inner">公開準備中のプレビュー版です。作品はYouTubeの動画につながっています。</div></div>
 
 <!-- エントランス -->
 <header class="entrance" id="entrance">
@@ -615,7 +610,7 @@ img { max-width: 100%; }
       </div>
       <p class="profession">音楽家・映像作家</p>
       <p class="greeting">私が届けたいのは「記憶を奏でる音楽」です。<br>音楽は、時にノスタルジックに、時に自由奔放に、そして時に妖しく、いくつもの顔を持って旅をしています。<br>あなたの気の向くまま、どうぞごゆっくり歩いてみてください。</p>
-      <p class="honors"><span>YAMAHA XG sound world '97　審査員特別賞</span><span>AIgekijo2026　一般公募部門 上映</span></p>
+      <p class="honors"><span>YAMAHA XG sound world '97　審査員特別賞</span><span>AIgekijo2026　一般公募部門 上映</span><span>AIクリエイティブ感謝祭2026　AI動画賞</span></p>
     </div>
     <section class="news" id="news" aria-labelledby="t-news">
       <h2 id="t-news">NEWS ／ お知らせ</h2>
@@ -745,13 +740,6 @@ img { max-width: 100%; }
       </div>
     </div>
     <div class="works" data-works="ugetsu"></div>
-    <template id="ugetsu-soon">
-      <div class="soon">
-        <p class="soon-k">NOW PREPARING</p>
-        <p class="soon-t">まもなく、<br>幕があがります。</p>
-        <p class="soon-d">雨月座の作品は、これから順に公開していきます。</p>
-      </div>
-    </template>
 
     <div class="cast-block">
       <p class="cast-h">CAST ／ 一座</p>
@@ -801,6 +789,7 @@ img { max-width: 100%; }
         <dl>
           <div><dt>1997</dt><dd><b>YAMAHA XG sound world '97</b>審査員特別賞受賞　「星屑の広がる箱」</dd></div>
           <div><dt>2026</dt><dd><b>AIgekijo2026</b>一般公募部門 上映作品　「渦 “Vortex”」</dd></div>
+          <div><dt>2026</dt><dd><b>AIクリエイティブ感謝祭2026</b>AI動画賞受賞　「それは日常」</dd></div>
         </dl>
       </div>
     </div>
@@ -838,7 +827,7 @@ const WORKS = {
     { title: "君のいた季節", kind: "Music Film", id: "sJhZYXoRfPY" },
     { title: "渦 “Vortex”", kind: "Music Film ／ 主演 雨宮 櫂", id: "GZAYExHV5mA", award: "AIgekijo2026 一般公募部門 上映作品" },
     { title: "そして少年は空を目指す", kind: "ピアノと映像作品", id: "bj8Eq_-_9Zg" },
-    { title: "それは日常", kind: "Music Film", id: "gwuHcTnGX6M" },
+    { title: "それは日常", kind: "Music Film", id: "gwuHcTnGX6M", award: "AIクリエイティブ感謝祭2026　AI動画賞" },
     { title: "夜の栞", kind: "眠る前のピアノ組曲", id: "JDDEdSshiSE" },
     { title: "君に還る世界", kind: "Music Film ／ ボーカル 東雲こと子", id: "I4e4gj2rz0c" },
   ],
@@ -859,7 +848,7 @@ const WORKS = {
     { title: "Blue Forget-Me-Nots", kind: "勿忘草の咲く丘で", id: "s2dbVpEgtks" },
   ],
   ugetsu: [
-    { title: "沈むカラダ", kind: "ユラ デビューシングル ／ まもなく公開", id: "9TLe8jiuaHk", soon: true },
+    { title: "沈むカラダ", kind: "ユラ デビューシングル", id: "9TLe8jiuaHk" },
   ],
 };
 
@@ -920,8 +909,6 @@ for (const [room, list] of Object.entries(WORKS)) {
   const host = document.querySelector(`[data-works="${room}"]`);
   list.forEach((w, i) => host.append(workEl(room, w, i)));
 }
-const soon = document.getElementById("ugetsu-soon");
-document.querySelector('[data-works="ugetsu"]').append(soon.content.cloneNode(true));
 
 /* 今いる区画：画面の中央線より上に先頭が来ている、いちばん下の区画 */
 const nav = document.getElementById("topnav");

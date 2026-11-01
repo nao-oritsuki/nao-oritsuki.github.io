@@ -438,6 +438,14 @@ p { margin: 0; }
 }
 @media (max-width: 900px) { #room-ugetsu .work.featured { grid-column: span 2; } }
 @media (max-width: 560px) { #room-ugetsu .work.featured { grid-column: auto; } }
+/* 縦長のショート動画：横の作品と枠の高さがそろう幅にする（16:9 の幅 × 81/256） */
+.work.short a.frame { aspect-ratio: 9 / 16; }
+#room-ugetsu .works:has(.short) { grid-template-columns: minmax(0, 256fr) minmax(0, 81fr); }
+#room-ugetsu .works:has(.short) .work.featured { grid-column: auto; grid-row: auto; }
+@media (max-width: 560px) {
+  #room-ugetsu .works:has(.short) { grid-template-columns: 1fr; }
+  .work.short { width: min(52%, 220px); }
+}
 
 
 /* 受賞・出演の表記 */
@@ -849,15 +857,16 @@ const WORKS = {
   ],
   ugetsu: [
     { title: "沈むカラダ", kind: "ユラ デビューシングル", id: "9TLe8jiuaHk" },
+    { title: "雨月座へようこそ", kind: "ショート動画", id: "8ZrGFTYXBzg", short: true },
   ],
 };
 
 function workEl(room, w, i) {
   const el = document.createElement("article");
-  el.className = "work" + (i === 0 && room !== "archive" ? " featured" : "");
+  el.className = "work" + (i === 0 && room !== "archive" ? " featured" : "") + (w.short ? " short" : "");
   const style = room === "archive" ? "hill" : room;
   /* 公開前の作品はチャンネルへ案内する */
-  const href = w.id && !w.soon ? `https://www.youtube.com/watch?v=${w.id}` : CHANNELS[style];
+  const href = w.id && !w.soon ? (w.short ? `https://www.youtube.com/shorts/${w.id}` : `https://www.youtube.com/watch?v=${w.id}`) : CHANNELS[style];
 
   let thumb;
   if (w.id) {

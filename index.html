@@ -12,6 +12,8 @@
 <meta property="og:image" content="https://nao-oritsuki.github.io/title/works-1.jpg">
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "居月ナオ", "alternateName": ["Nao Oritsuki", "NAO ORITSUKI"], "jobTitle": "音楽家・映像作家", "url": "https://nao-oritsuki.github.io/", "sameAs": ["https://www.youtube.com/channel/UCxEU4TGI-jVkG482-qm3_Wg", "https://www.youtube.com/@NCQ_ochikyumi", "https://www.youtube.com/@ugetsuza", "https://x.com/from_ochikyumi", "https://www.instagram.com/from_ochikyumi"]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SHT4HCET3Y"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag("js", new Date()); gtag("config", "G-SHT4HCET3Y");</script>
 <title>NAO ORITSUKI ｜居月ナオ</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="居月ナオ（Nao Oritsuki）公式サイト。音楽家・映像作家。お地球見の丘より。／NEBULA CLAWS QUARTET／雨月座">
@@ -817,7 +819,7 @@ img { max-width: 100%; }
     </div>
   </div>
 </section>
-<footer><div class="inner">© 居月ナオ ／ お地球見の丘より。since 1997</div></footer>
+<footer><div class="inner">© 居月ナオ ／ お地球見の丘より。since 1997<br><small>このサイトでは、アクセス解析に Google アナリティクスを使っています。</small></div></footer>
 
 
 <script>
@@ -930,6 +932,17 @@ const spots = [
   [document.getElementById("exit"), "profile"],
 ];
 const ROOMS = ["hill", "jazz", "ugetsu"];
+/* アクセス解析：公開サイトで Google アナリティクスが入っているときだけ記録する（試作では何もしない） */
+function track(name, params) { if (typeof window.gtag === "function") window.gtag("event", name, params); }
+const seen = new Set();
+document.addEventListener("click", e => {
+  const a = e.target.closest("a");
+  if (!a) return;
+  const room = a.closest("section, [id^='room-']");
+  if (a.matches(".work a.frame")) track("work_click", { work_title: a.closest(".work").querySelector(".label .t").textContent, section: room ? room.id.replace("room-", "") : "" });
+  else if (a.matches(".poster")) track("poster_click", { section: a.getAttribute("href").replace("#room-", "") });
+});
+
 function updateHere() {
   const mid = innerHeight / 2;
   let key = spots[0][1];
@@ -938,6 +951,7 @@ function updateHere() {
   if (root.scrollTop + innerHeight >= root.scrollHeight - 4) key = "profile";
   if (nav.dataset.key === key) return;
   nav.dataset.key = key;
+  if (!seen.has(key)) { seen.add(key); track("section_view", { section: key }); }
   nav.dataset.room = ROOMS.includes(key) ? key : "home";
   worksGroup.classList.toggle("is-in", key === "works" || ROOMS.includes(key));
   nav.querySelectorAll("ul a").forEach(a => {

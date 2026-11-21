@@ -30,6 +30,13 @@
   --wall-ink: #23262b;
   --wall-muted: #6b7078;
   --wall-line: #d7dad6;
+  /* HOME の夜空（プラネタリウム） */
+  --sky-1: #020205;
+  --sky-2: #05060d;
+  --sky-3: #0c0f24;
+  --sky-ink: #eef0f8;
+  --sky-muted: #9ea7c6;
+  --sky-line: rgba(220, 228, 255, 0.22);
   /* WORKS Ⅰ：夕暮れの丘 */
   --hill-bg: #e4eaec;
   --hill-ink: #283742;
@@ -104,7 +111,7 @@ p { margin: 0; }
   left: calc(50% - 50vw); width: 100vw; height: 100%;
   pointer-events: none;
 }
-.title-stage h1 { position: relative; text-shadow: 0 0 14px var(--wall), 0 0 4px var(--wall), 0 0 2px var(--wall); }
+.title-stage h1 { position: relative; text-shadow: 0 0 22px rgba(150, 165, 255, 0.35), 0 0 12px var(--sky-2), 0 0 4px var(--sky-2); }
 
 /* 試作の注記 */
 .proto-note {
@@ -116,16 +123,42 @@ p { margin: 0; }
 
 /* ── エントランス ── */
 .entrance .inner {
-  padding-block: clamp(56px, 12vw, 120px) clamp(40px, 8vw, 80px);
+  padding-block: 0 clamp(40px, 8vw, 80px);
   display: grid;
   gap: clamp(40px, 6vw, 64px);
 }
-.entrance-head { display: grid; gap: 20px; }
+.entrance-head {
+  position: relative; isolation: isolate;
+  display: grid; gap: 20px;
+  padding-block: clamp(56px, 12vw, 120px) clamp(110px, 13vw, 160px);
+  color: var(--sky-ink);
+}
+/* 夜空は画面の端から端まで。下の端で、ゆっくり昼の壁の色へ明けていく */
+.entrance-head::before, .entrance-head::after, #sky {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(50% - 50vw); width: 100vw;
+  pointer-events: none;
+}
+.entrance-head::before {
+  content: ""; z-index: -2;
+  background: radial-gradient(120% 90% at 70% 10%, var(--sky-3) 0%, var(--sky-2) 45%, var(--sky-1) 100%);
+}
+#sky { z-index: -1; height: 100%; }
+.entrance-head::after {
+  content: ""; z-index: -1; top: auto; height: 96px;
+  background: linear-gradient(to bottom, rgba(242, 243, 241, 0), rgba(176, 172, 214, 0.35) 45%, var(--wall));
+}
 .entrance .eyebrow {
   font-size: var(--step--1);
   letter-spacing: 0.3em;
   color: var(--wall-muted);
 }
+.entrance .entrance-head .eyebrow, .entrance .entrance-head h1 .roman, .entrance .entrance-head .honors { color: var(--sky-muted); }
+.entrance .entrance-head .profession { color: #d9deee; }
+/* 天の川に重なっても読めるよう、文字のまわりに夜の影を敷く */
+.entrance-head .eyebrow, .entrance-head .profession, .entrance-head .greeting, .entrance-head .honors { text-shadow: 0 0 12px var(--sky-1), 0 0 4px var(--sky-1); }
+.entrance-head .sns a { border-color: var(--sky-line); color: var(--sky-ink); }
+.entrance-head .sns a:hover { background: var(--sky-ink); color: var(--sky-1); }
 .entrance h1 {
   font-family: var(--font-mincho);
   font-size: var(--step-4);
@@ -525,6 +558,7 @@ p { margin: 0; }
   border-bottom: 1px solid var(--nav-line);
   transition: background-color .5s, color .5s, border-color .5s;
 }
+.topnav[data-key="home"], .topnav:not([data-key]) { --nav-bg: var(--sky-1); --nav-ink: var(--sky-ink); --nav-muted: var(--sky-muted); --nav-line: rgba(220, 228, 255, 0.12); --nav-on: var(--sky-ink); }
 .topnav[data-room="hill"] { --nav-bg: var(--hill-bg); --nav-ink: var(--hill-ink); --nav-muted: var(--hill-muted); --nav-line: var(--hill-line); --nav-on: var(--hill-accent); }
 .topnav[data-room="jazz"] { --nav-bg: var(--jazz-bg); --nav-ink: var(--jazz-ink); --nav-muted: var(--jazz-muted); --nav-line: var(--jazz-line); --nav-on: var(--jazz-accent); }
 .topnav[data-room="ugetsu"] { --nav-bg: var(--ugetsu-bg); --nav-ink: var(--ugetsu-ink); --nav-muted: var(--ugetsu-muted); --nav-line: var(--ugetsu-line); --nav-on: var(--ugetsu-hi); }
@@ -613,6 +647,7 @@ img { max-width: 100%; }
 <header class="entrance" id="entrance">
   <div class="inner">
     <div class="entrance-head">
+      <canvas id="sky" aria-hidden="true"></canvas>
       <div class="entrance-top"><p class="eyebrow">SINCE 1997</p><div class="sns"><a href="https://x.com/from_ochikyumi" target="_blank" rel="noopener" aria-label="X（@from_ochikyumi）"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a href="https://www.instagram.com/from_ochikyumi" target="_blank" rel="noopener" aria-label="Instagram（@from_ochikyumi）"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/></g><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a></div></div>
       <div class="title-stage">
         <canvas id="melody" aria-hidden="true"></canvas>
@@ -984,8 +1019,8 @@ updateHere();
   const title = cv.parentElement.querySelector("h1");
   const mcv = document.createElement("canvas"), mctx = mcv.getContext("2d");   /* 狭い画面用のマスク */
   /* 3つのチャンネルの色：丘の薄紫と緑、ジャズの真鍮と紺、雨月座のピンク・電気の青・レモン */
-  const PALETTE = [[142, 139, 208], [95, 125, 106], [201, 163, 91], [42, 51, 80], [255, 42, 157], [51, 36, 255], [214, 200, 40]];
-  const STAFF = "rgba(150, 156, 160, 0.42)";
+  const PALETTE = [[170, 166, 240], [120, 200, 150], [226, 186, 104], [226, 232, 255], [255, 72, 172], [104, 120, 255], [228, 216, 70]];
+  const STAFF = "rgba(196, 206, 240, 0.30)";
   const SPEED = 16;          // 1秒に進むピクセル
   const LINK_TIME = 0.35;    // 線を1本つなぐのにかかる秒数
   const LINK_DELAY = 0.8;    // 見え始めてから線をつなぎ始めるまでの秒数
@@ -1116,7 +1151,7 @@ updateHere();
         const [x, y] = pos[i];
         const r = p.r * (1 + 0.22 * Math.sin(t * 2.1 + p.ph));
         const halo = ctx.createRadialGradient(x, y, 0, x, y, r * 4);
-        halo.addColorStop(0, rgba(p.c, 0.35)); halo.addColorStop(1, rgba(p.c, 0));
+        halo.addColorStop(0, rgba(p.c, 0.5)); halo.addColorStop(1, rgba(p.c, 0));
         ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(x, y, r * 4, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = rgba(p.c, 0.95); ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
       });
@@ -1159,6 +1194,161 @@ updateHere();
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;
     if (visible && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+  }).observe(cv);
+  raf = requestAnimationFrame(frame);
+})();
+
+/* HOME：プラネタリウムの夜空。
+   天の川と細かな星くずは一度だけ描いておき、明るい星だけがまたたく。ときどき流れ星が横切る。 */
+(function nightSky() {
+  const cv = document.getElementById("sky");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const base = document.createElement("canvas"), bctx = base.getContext("2d");   /* 動かない層 */
+  const TINTS = [[255, 255, 255], [205, 218, 255], [255, 238, 214], [220, 206, 255]];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0, dpr = 1, stars = [], shoot = null, nextShoot = 0, raf = 0, visible = true;
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+  /* 天の川：左下から右上へ斜めに流れる帯 */
+  const bandY = x => H * (0.95 - 0.8 * (x / W));
+  const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+  /* なめらかなゆらぎ（重ねたバリューノイズ）。0〜1 を返す */
+  function makeNoise() {
+    const v = Float32Array.from({ length: 256 }, Math.random), perm = [...Array(256).keys()].sort(() => Math.random() - 0.5);
+    const h = (i, j) => v[(perm[i & 255] + j) & 255];
+    const sm = t => t * t * (3 - 2 * t);
+    const n = (x, y) => {
+      const i = Math.floor(x), j = Math.floor(y), fx = sm(x - i), fy = sm(y - j);
+      const a = h(i, j), b = h(i + 1, j), c = h(i, j + 1), d = h(i + 1, j + 1);
+      return a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy;
+    };
+    return (x, y) => { let s = 0, amp = 0.5, f = 1; for (let o = 0; o < 5; o++) { s += amp * n(x * f + o * 17, y * f + o * 31); amp *= 0.5; f *= 2.03; } return s / 0.97; };
+  }
+
+  function resize() {
+    const r = cv.getBoundingClientRect();
+    /* スマホでスクロール中に起きる大きさの変わらない resize では、星を並べ直さない */
+    if (Math.abs(r.width - W) < 1 && Math.abs(r.height - H) < 1) return;
+    dpr = Math.min(2, devicePixelRatio || 1);
+    W = r.width; H = r.height;
+    if (!W || !H) return;
+    for (const c of [cv, base]) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    /* 天の川：雲のような光の帯と、その中の暗い塵の筋を、ゆらぎ（ノイズ）から作る */
+    const bw = Math.min(W, H) * 0.2;
+    const len = Math.hypot(W, H * 0.8), ux = W / len, uy = -H * 0.8 / len;   /* 帯の向き */
+    const noise = makeNoise(), dustNoise = makeNoise(), edgeNoise = makeNoise();
+    const S = 4, gw = Math.ceil(W / S), gh = Math.ceil(H / S);
+    const glow = new Float32Array(gw * gh);
+    const img = bctx.createImageData(gw, gh);
+    for (let j = 0; j < gh; j++) for (let i = 0; i < gw; i++) {
+      const x = i * S, y = j * S, ry = y - H * 0.95;
+      const along = (x * ux + ry * uy) / len;                       /* 帯にそって 0→1 */
+      let d = (x * -uy + ry * ux) / bw;                              /* 帯の中心からの距離 */
+      d += (edgeNoise(x / 260, y / 260) - 0.5) * 1.1;                /* 縁を不規則に */
+      const prof = Math.exp(-d * d * 1.3);
+      const core = Math.exp(-(((along - 0.38) / 0.2) ** 2));          /* 銀河の中心ほど明るく */
+      const cloud = noise(x / 110, y / 110);
+      let v = prof * (0.18 + 0.82 * cloud * cloud) * (0.55 + 0.9 * core);
+      const lane = Math.max(0, Math.min(1, (dustNoise(x / 70, y / 70) - 0.5) / 0.16));
+      v *= 1 - 0.85 * lane * Math.exp(-((d - 0.15) ** 2) * 2.2);       /* 暗い塵の筋 */
+      glow[j * gw + i] = v;
+      const warm = Math.min(1, prof * core * 1.4);
+      const k = (j * gw + i) * 4;
+      img.data[k] = 150 + 95 * warm; img.data[k + 1] = 160 + 62 * warm; img.data[k + 2] = 225 - 35 * warm;
+      img.data[k + 3] = Math.min(255, v * 150);
+    }
+    const tmp = document.createElement("canvas"); tmp.width = gw; tmp.height = gh;
+    tmp.getContext("2d").putImageData(img, 0, 0);
+    bctx.imageSmoothingQuality = "high";
+    bctx.filter = "blur(2px)"; bctx.drawImage(tmp, 0, 0, W, H); bctx.filter = "none";
+    bctx.globalAlpha = 0.6; bctx.drawImage(tmp, 0, 0, W, H); bctx.globalAlpha = 1;
+    const glowAt = (x, y) => glow[Math.min(gh - 1, Math.max(0, y / S | 0)) * gw + Math.min(gw - 1, Math.max(0, x / S | 0))] || 0;
+    /* 星くず：光の濃いところほど密に集まる */
+    const tries = Math.round(W * H / 26);
+    for (let i = 0; i < tries; i++) {
+      const x = Math.random() * W, y = Math.random() * H, g = glowAt(x, y);
+      if (Math.random() > 0.025 + g * 0.9) continue;
+      const c = pick(TINTS), big = Math.random() < 0.04;
+      bctx.fillStyle = `rgba(${c},${rand(0.15, 0.55) + g * 0.3})`;
+      if (big) { bctx.beginPath(); bctx.arc(x, y, rand(0.7, 1.1), 0, Math.PI * 2); bctx.fill(); }
+      else bctx.fillRect(x, y, rand(0.4, 0.9), rand(0.4, 0.9));
+    }
+    /* 小さな星団 */
+    for (let n = 0; n < 7; n++) {
+      const cx = rand(0, W), cy = bandY(cx) + gauss() * bw * 0.8, cr = rand(6, 16);
+      for (let i = 0; i < 40; i++) {
+        const a = rand(0, Math.PI * 2), rr = cr * Math.sqrt(Math.random());
+        bctx.fillStyle = `rgba(${pick(TINTS)},${rand(0.3, 0.8)})`;
+        bctx.fillRect(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr, 0.8, 0.8);
+      }
+    }
+    /* 四隅を少し暗く（レンズの周辺減光） */
+    const vg = bctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.3, W / 2, H / 2, Math.hypot(W, H) * 0.6);
+    vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(0,0,0,0.55)");
+    bctx.fillStyle = vg; bctx.fillRect(0, 0, W, H);
+    /* またたく星 */
+    const n = Math.min(260, Math.round(W * H / 4200));
+    stars = Array.from({ length: n }, () => {
+      const big = Math.random() < 0.05;
+      return { x: rand(0, W), y: rand(0, H), r: big ? rand(1.3, 2) : rand(0.5, 1.2), a: rand(0.45, 1), sp: rand(0.6, 2.4), ph: rand(0, Math.PI * 2), c: pick(TINTS), big };
+    });
+    draw(performance.now() / 1000);
+  }
+
+  function draw(t) {
+    if (!W || !H) return;
+    ctx.clearRect(0, 0, W, H);
+    ctx.drawImage(base, 0, 0, W, H);
+    for (const s of stars) {
+      const a = reduce ? s.a : s.a * (0.55 + 0.45 * Math.sin(t * s.sp + s.ph));
+      if (s.big) {
+        const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 6);
+        g.addColorStop(0, `rgba(${s.c},${a * 0.45})`); g.addColorStop(1, `rgba(${s.c},0)`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(s.x, s.y, s.r * 6, 0, Math.PI * 2); ctx.fill();
+        /* 十字の光 */
+        ctx.strokeStyle = `rgba(${s.c},${a * 0.35})`; ctx.lineWidth = 0.6;
+        ctx.beginPath(); ctx.moveTo(s.x - s.r * 7, s.y); ctx.lineTo(s.x + s.r * 7, s.y); ctx.moveTo(s.x, s.y - s.r * 7); ctx.lineTo(s.x, s.y + s.r * 7); ctx.stroke();
+      }
+      ctx.fillStyle = `rgba(${s.c},${a})`;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    }
+    /* 流れ星 */
+    if (!reduce) {
+      if (!shoot && t > nextShoot) {
+        shoot = { t0: t, x: rand(0.35, 1) * W, y: rand(0, 0.35) * H, len: rand(90, 170), dur: rand(0.7, 1.1) };
+        nextShoot = t + rand(7, 14);
+      }
+      if (shoot) {
+        const k = (t - shoot.t0) / shoot.dur;
+        if (k >= 1) shoot = null;
+        else {
+          const dist = k * 260, hx = shoot.x - dist * 0.9, hy = shoot.y + dist * 0.45;
+          const tx = hx + shoot.len * 0.9, ty = hy - shoot.len * 0.45;
+          const fade = Math.sin(k * Math.PI);
+          const g = ctx.createLinearGradient(hx, hy, tx, ty);
+          g.addColorStop(0, `rgba(255,255,255,${0.9 * fade})`); g.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.strokeStyle = g; ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(tx, ty); ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function frame(now) {
+    draw(now / 1000);
+    raf = visible ? requestAnimationFrame(frame) : 0;
+  }
+  resize();
+  addEventListener("resize", resize);
+  if (document.fonts) document.fonts.ready.then(resize);
+  if (reduce) return;
+  nextShoot = performance.now() / 1000 + 3;
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible && !raf) raf = requestAnimationFrame(frame);
   }).observe(cv);
   raf = requestAnimationFrame(frame);
 })();
